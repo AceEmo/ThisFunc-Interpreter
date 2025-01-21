@@ -1,0 +1,54 @@
+# Basic arithmetic operations
+add(1, 2)
+sub(10, 5)
+mul(3, 4)
+div(9, 3)
+pow(2, 3)
+sqrt(16)
+
+# Logical and comparison operations
+nand(1, 0)
+nand(1, 1)
+eq(5, 5)
+le(3, 7)
+
+# Conditional expressions
+if(1, 5, 7)
+if(0, 5, 7)
+if(eq(3, 3), 10, 20)
+if(nand(1, 0), 15, 25)
+
+# Function declarations and invocations
+sum <- add(#0, add(#1, #2))
+sum(1, 3, 5)
+
+double <- mul(#0, 2)
+double(7)
+
+square <- mul(#0, #0)
+square(5)
+
+maxVal <- if(le(#0, #1), #1, #0)
+maxVal(10, 20)
+
+# Recursive functions
+fact <- if(eq(#0, 0), 1, mul(#0, fact(sub(#0, 1))))
+fact(0)
+fact(5)
+
+fib <- div(sub(pow(add(1, sqrt(5)), #0), pow(sub(1, sqrt(5)), #0)), mul(pow(2, #0), sqrt(5)))
+fib(0)
+fib(1)
+fib(5)
+fib(12)
+
+# Using lists
+myList <- list(1, 2, 3, 4)
+myList()
+
+list(1, 2, 3, 4)
+length([])
+length(myList())
+head(myList())
+tail(myList())
+exit
