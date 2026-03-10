@@ -1,11 +1,122 @@
-# ThisFunc-Interpreter
-# Interpreter for 'thisFunc' - A Functional Language
+🧮 Custom Expression Interpreter
 
-Welcome to the repository for the **Interpreter for 'thisFunc'**, a functional programming language designed to support key functional programming concepts. This interpreter processes and executes programs written in 'thisFunc,' a language focusing on clarity, purity, and immutability.
+Интерпретатор за функционален език с поддръжка на аритметика, логика, условни изрази, функции (вкл. рекурсия) и списъци. Реализиран е със smart pointers, което гарантира безопасно управление на паметта и чиста архитектура.
 
-## Features
+✨ Основни характеристики
 
-- **Functional Syntax**: Supports core functional programming features such as higher-order functions, recursion, and immutability.
-- **Dynamic Function Definition**: Functions can be defined and called at runtime.
-- **Simple and Lightweight**: The interpreter is minimal, focusing on simplicity and clarity in its design and execution.
-- **Extensible**: Easy to extend with new features, such as additional built-in functions or error-handling mechanisms.
+✔ Аритметични операции
+
+Интерпретаторът поддържа стандартни операции:
+
+add(1, 2)        → 3
+sub(10, 5)       → 5
+mul(3, 4)        → 12
+div(9, 3)        → 3
+pow(2, 3)        → 8
+sqrt(16)         → 4
+
+✔ Логически и сравнителни операции
+
+nand(1, 0)       → 1
+nand(1, 1)       → 0
+eq(5, 5)         → 1
+le(3, 7)         → 1
+
+✔ Условни изрази (if)
+
+Синтаксис: if(condition, value_if_true, value_if_false)
+
+if(1, 5, 7)                  → 5
+if(0, 5, 7)                  → 7
+if(eq(3, 3), 10, 20)         → 10
+if(nand(1, 0), 15, 25)       → 15
+
+🧩 Функции
+
+✔ Деклариране на функции
+
+Функциите се дефинират чрез оператор за присвояване:
+
+sum <- add(#0, add(#1, #2))
+sum(1, 3, 5)                 → 9
+
+Аргументите се достъпват чрез #0, #1, #2, …
+
+✔ Примери
+
+double <- mul(#0, 2)
+double(7)                    → 14
+
+square <- mul(#0, #0)
+square(5)                    → 25
+
+maxVal <- if(le(#0, #1), #1, #0)
+maxVal(10, 20)               → 20
+
+🔁 Рекурсия
+
+Интерпретаторът поддържа рекурсивни функции.
+
+Факториел:
+
+fact <- if(eq(#0, 0), 1, mul(#0, fact(sub(#0, 1))))
+fact(0)                      → 1
+fact(5)                      → 120
+
+Фибоначи (формула на Бине):
+
+fib <- div(
+    sub(pow(add(1, sqrt(5)), #0), pow(sub(1, sqrt(5)), #0)),
+    mul(pow(2, #0), sqrt(5))
+)
+
+fib(0)                       → 0
+fib(1)                       → 1
+fib(5)                       → 5
+fib(12)                      → 144
+
+📦 Списъци
+
+Интерпретаторът поддържа базови операции със списъци:
+
+myList <- list(1, 2, 3, 4)
+myList()                     → [1, 2, 3, 4]
+
+list(1, 2, 3, 4)
+length([])                   → 0
+length(myList())             → 4
+head(myList())               → 1
+tail(myList())               → [2, 3, 4]
+
+🛑 Изход от програмата
+
+exit
+
+🏗 Технически бележки
+
+Проектът е реализиран със smart pointers (std::shared_ptr, std::unique_ptr), което гарантира:
+
+автоматично управление на паметта
+
+липса на memory leaks
+
+чисто и модулно дърво от AST възли
+
+Интерпретаторът използва:
+
+AST структура за представяне на изрази
+
+таблица със символи за функции и променливи
+
+рекурсивен evaluation модел
+
+📘 Примерна употреба
+
+sum <- add(#0, #1)
+sum(10, 20)
+
+fact <- if(eq(#0, 0), 1, mul(#0, fact(sub(#0, 1))))
+fact(6)
+
+myList <- list(5, 6, 7)
+head(myList())
