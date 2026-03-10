@@ -1,122 +1,101 @@
-🧮 Custom Expression Interpreter
+# ThisFunc-Interpreter
 
-Интерпретатор за функционален език с поддръжка на аритметика, логика, условни изрази, функции (вкл. рекурсия) и списъци. Реализиран е със smart pointers, което гарантира безопасно управление на паметта и чиста архитектура.
+Interpreter for **ThisFunc**, a small functional programming language focusing on clarity, purity, and immutability.
 
-✨ Основни характеристики
+---
 
-✔ Аритметични операции
+## Features
 
-Интерпретаторът поддържа стандартни операции:
+* Pure functions, recursion, and immutability
+* Dynamic function definition and runtime evaluation
+* Lists, arithmetic, logical operations, and conditionals
+* Lightweight, minimal, and easy to extend
 
-add(1, 2)        → 3
-sub(10, 5)       → 5
-mul(3, 4)        → 12
-div(9, 3)        → 3
-pow(2, 3)        → 8
-sqrt(16)         → 4
+---
 
-✔ Логически и сравнителни операции
+## Installation
 
-nand(1, 0)       → 1
-nand(1, 1)       → 0
-eq(5, 5)         → 1
-le(3, 7)         → 1
+Clone the repository:
 
-✔ Условни изрази (if)
+```
+git clone https://github.com/AceEmo/ThisFunc-Interpreter.git
+cd ThisFunc-Interpreter
+```
 
-Синтаксис: if(condition, value_if_true, value_if_false)
+Compile (if C++):
 
-if(1, 5, 7)                  → 5
-if(0, 5, 7)                  → 7
-if(eq(3, 3), 10, 20)         → 10
-if(nand(1, 0), 15, 25)       → 15
+```
+g++ -std=c++17 -O2 main.cpp -o thisfunc
+```
 
-🧩 Функции
+Run the interpreter:
 
-✔ Деклариране на функции
+```
+./thisfunc
+```
 
-Функциите се дефинират чрез оператор за присвояване:
+---
 
-sum <- add(#0, add(#1, #2))
-sum(1, 3, 5)                 → 9
+## Usage
 
-Аргументите се достъпват чрез #0, #1, #2, …
+**REPL Example:**
 
-✔ Примери
+```
+> add(2,3)
+5
+> fact <- if(eq(#0,0),1,mul(#0,fact(sub(#0,1))))
+> fact(5)
+120
+> myList <- list(1,2,3)
+> head(myList())
+1
+> tail(myList())
+[2,3]
+```
 
-double <- mul(#0, 2)
-double(7)                    → 14
+---
 
-square <- mul(#0, #0)
-square(5)                    → 25
+## Interpreter Structure
 
-maxVal <- if(le(#0, #1), #1, #0)
-maxVal(10, 20)               → 20
+1. **Lexer:** Tokenizes the source code.
+2. **Parser:** Builds the Abstract Syntax Tree (AST).
+3. **AST:** Represents literals, variables, operations, conditionals, function calls, and lists.
+4. **Evaluator:** Traverses the AST, computes values, handles recursion and function calls.
 
-🔁 Рекурсия
+---
 
-Интерпретаторът поддържа рекурсивни функции.
+## Built-in Functions
 
-Факториел:
+* Arithmetic: `add`, `sub`, `mul`, `div`, `pow`, `sqrt`
+* Logical/Comparison: `eq`, `le`, `nand`
+* Conditional: `if(cond, then, else)`
+* Lists: `list(...)`, `head(list)`, `tail(list)`, `length(list)`
 
-fact <- if(eq(#0, 0), 1, mul(#0, fact(sub(#0, 1))))
-fact(0)                      → 1
-fact(5)                      → 120
+---
 
-Фибоначи (формула на Бине):
+## Examples
 
-fib <- div(
-    sub(pow(add(1, sqrt(5)), #0), pow(sub(1, sqrt(5)), #0)),
-    mul(pow(2, #0), sqrt(5))
-)
+Factorial:
 
-fib(0)                       → 0
-fib(1)                       → 1
-fib(5)                       → 5
-fib(12)                      → 144
+```
+fact <- if(eq(#0,0),1,mul(#0,fact(sub(#0,1))))
+fact(5)  ; returns 120
+```
 
-📦 Списъци
+Fibonacci:
 
-Интерпретаторът поддържа базови операции със списъци:
+```
+fib <- div(sub(pow(add(1,sqrt(5)),#0),pow(sub(1,sqrt(5)),#0)),mul(pow(2,#0),sqrt(5)))
+fib(12) ; returns 144
+```
 
-myList <- list(1, 2, 3, 4)
-myList()                     → [1, 2, 3, 4]
+Lists:
 
-list(1, 2, 3, 4)
-length([])                   → 0
-length(myList())             → 4
-head(myList())               → 1
-tail(myList())               → [2, 3, 4]
+```
+myList <- list(10,20,30)
+length(myList()) ; 3
+head(myList())   ; 10
+tail(myList())   ; [20,30]
+```
 
-🛑 Изход от програмата
-
-exit
-
-🏗 Технически бележки
-
-Проектът е реализиран със smart pointers (std::shared_ptr, std::unique_ptr), което гарантира:
-
-автоматично управление на паметта
-
-липса на memory leaks
-
-чисто и модулно дърво от AST възли
-
-Интерпретаторът използва:
-
-AST структура за представяне на изрази
-
-таблица със символи за функции и променливи
-
-рекурсивен evaluation модел
-
-📘 Примерна употреба
-
-sum <- add(#0, #1)
-sum(10, 20)
-
-fact <- if(eq(#0, 0), 1, mul(#0, fact(sub(#0, 1))))
-fact(6)
-
-myList <- list(5, 6, 7)
-head(myList())
+---
